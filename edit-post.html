@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Blog Post</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #6e8efb;
+      text-align: center;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #6e8efb;
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #5a75e0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Edit Blog Post</h1>
+
+<form onsubmit="updatePost(event)">
+  <input type="text" id="title" required/>
+  <textarea id="content" rows="10" required></textarea>
+  <button type="submit">Update Post</button>
+</form>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const posts = JSON.parse(localStorage.getItem('posts')) || {};
+
+  if (!posts[id]) {
+    alert('Post not found.');
+    window.location.href = 'index.html';
+  }
+
+  // Populate fields
+  document.getElementById('title').value = posts[id].title;
+  document.getElementById('content').value = posts[id].content;
+
+  function updatePost(e) {
+    e.preventDefault();
+    posts[id].title = document.getElementById('title').value.trim();
+    posts[id].content = document.getElementById('content').value.trim();
+
+    localStorage.setItem('posts', JSON.stringify(posts));
+    alert('Post updated successfully!');
+    window.location.href = 'index.html';
+  }
+</script>
+
+</body>
+</html>

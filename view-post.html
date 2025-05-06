@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Blog Post</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      padding: 2rem;
+    }
+
+    .post {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #6e8efb;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      white-space: pre-wrap;
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: #6e8efb;
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #5a75e0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="post">
+  <h1 id="title"></h1>
+  <p id="content"></p>
+  <button onclick="goBack()">Back to Home</button>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const posts = JSON.parse(localStorage.getItem('posts')) || {};
+
+  if (!posts[id]) {
+    alert('Post not found.');
+    window.location.href = 'index.html';
+  }
+
+  document.getElementById('title').innerText = posts[id].title;
+  document.getElementById('content').innerText = posts[id].content;
+
+  function goBack() {
+    window.location.href = 'index.html';
+  }
+</script>
+
+</body>
+</html>
